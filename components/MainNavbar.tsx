@@ -56,21 +56,20 @@ const Title = styled.div`
 			width: 64px;
 		}
 		p {
-			line-heigh: 0;
+			line-height: 0;
 		}
-
 	`}
 `
 export const MainNavbar = () => {
 	return (
 		<StyledHeader>
 			<TitleContainer>
-				<img src="/logo.svg" alt="Next Shop Logo"/>
 				<Title>
-					<div>
-						<h2>The Next Shop</h2>
-						<p>A Next.js Recipe discovery app.</p>
-					</div>
+				<img src="/logo.svg" alt="Next Shop Logo"/>
+				<div>
+					<h2>The Next Shop</h2>
+					<p>A Next.js Recipe discovery app.</p>
+				</div>
 				</Title>
 			</TitleContainer>
 			<StyledMenu 

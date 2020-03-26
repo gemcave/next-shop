@@ -1,16 +1,16 @@
-import { creteGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 
 export const heading = size => {
 	return `
-			text-align: center;
-			font-weight: bold;
-			line-height: 1em;		
-			font-size: ${size};
+		text-align: center;
+		font-weight: bold;
+		line-height: 1em;		
+		font-size: ${size};
 	`
 }
 
-export const GlobalStyle = creteGlobalStyle`
-	${({theme}) => {`
+export const GlobalStyle = createGlobalStyle`
+	${({theme}) => `
 			h1 {
 				${heading(theme['font-size-xl'])}
 			}
@@ -24,5 +24,5 @@ export const GlobalStyle = creteGlobalStyle`
 				${heading(theme['font-size-sm'])}
 			}
 		`	
-	}}
+		}
 `

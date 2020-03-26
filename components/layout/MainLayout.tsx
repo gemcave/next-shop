@@ -53,9 +53,7 @@ export class MainLayout extends Component<Props> {
 				<StyledBody>
 					<Layout>
 						<MainNavbar />
-						<Content>
-							{children}
-						</Content>
+						<Content>{children}</Content>
 						<MainFooter/>
 					</Layout>
 				</StyledBody>
