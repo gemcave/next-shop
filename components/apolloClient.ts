@@ -10,6 +10,9 @@ const {
 } = publicRuntimeConfig;
 
 export default function createApolloClient(initialState, ctx) {
+  console.log(
+    `******************======== ${GRAPHCMSURL}/${GRAPHCMSID}/${BRANCH}`
+  );
   // The `ctx` (NextPageContext) will only be present on the server.
   // use it to extract auth headers (ctx.req) or similar.
   return new ApolloClient({
