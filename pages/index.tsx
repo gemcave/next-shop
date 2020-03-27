@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { MainLayout } from "../components/layout/MainLayout";
+import { RecipesList, queryEnum } from "../components/RecipeList";
 
 const StyledHeader = styled.h1`
   ${({ theme }) => `	 
@@ -13,6 +14,7 @@ const Index = props => {
   return (
     <MainLayout title="Recipes">
       <StyledHeader>Index</StyledHeader>
+      <RecipesList parentRoute="recipe" queryType={queryEnum.recipes} />
     </MainLayout>
   );
 };
