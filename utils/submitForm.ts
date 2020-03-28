@@ -27,10 +27,43 @@ export const submitForm = (initialValues, callback) => {
     });
   };
 
+  const handleAddIngredient = event => {
+    event.persist();
+    setInputs(inputs => {
+      const sortedIngredients = _.sortBy(inputs.ingredients, ["key"]);
+      const key =
+        sortedIngredients.length > 0
+          ? sortedIngredients[sortedIngredients.length - 1].key + 1
+          : 0;
+      return {
+        ...inputs,
+        ingredients: _.concat(inputs.ingredients, [
+          { key, amount: "", unit: "-", type: "" }
+        ])
+      };
+    });
+  };
+
+  const handleDeleteIngredient = event => {
+    event.persist();
+    const position = parseInt(event.target.name);
+    setInputs(inputs => {
+      return {
+        ...inputs,
+        ingredients: _.filter(
+          inputs.ingredients,
+          (_i, index) => index !== position
+        )
+      };
+    });
+  };
+
   return {
     inputs,
     handleInputChange,
     handleDropdownChange,
-    handleSubmit
+    handleSubmit,
+    handleAddIngredient,
+    handleDeleteIngredient
   };
 };

@@ -1,5 +1,6 @@
 import { Form, Row, Col, Button } from "antd";
 import { submitForm } from "../utils/submitForm";
+import { GenerateIngredients } from "./GenerateIngredients";
 import {
   GenerateInput,
   GenerateTextInput,
@@ -16,13 +17,16 @@ export const CreateRecipe = () => {
     inputs,
     handleInputChange,
     handleDropdownChange,
+    handleAddIngredient,
+    handleDeleteIngredient,
     handleSubmit
   } = submitForm(
     {
       title: "",
       description: "",
       content: "",
-      status: "DRAFT"
+      status: "DRAFT",
+      ingredients: []
     },
     initiateCreateRecipe
   );
@@ -41,6 +45,14 @@ export const CreateRecipe = () => {
       <GenerateTextInput
         name="content"
         value={inputs.content}
+        handleInputChange={handleInputChange}
+      />
+      <GenerateIngredients
+        names={["amount", "unit", "type"]}
+        values={inputs.ingredients}
+        handleAddIngredient={handleAddIngredient}
+        handleDeleteIngredient={handleDeleteIngredient}
+        handleDropdownChange={handleDropdownChange}
         handleInputChange={handleInputChange}
       />
       <Row>
