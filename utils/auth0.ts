@@ -13,7 +13,7 @@ export default initAuth0({
     storeRefreshToken: false
   },
   oidcClient: {
-    httpTimeout: 2500,
+    httpTimeout: 4500,
     clockTolerance: 10000
   }
 });

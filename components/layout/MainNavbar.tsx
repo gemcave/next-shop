@@ -1,6 +1,7 @@
 import { Layout, Menu } from "antd";
 import styled from "styled-components";
 import Link from "next/link";
+import { useFetchUser } from "../../utils/user";
 
 const { Header } = Layout;
 
@@ -61,6 +62,10 @@ const Title = styled.div`
 	`}
 `;
 export const MainNavbar = () => {
+  const { user, loading } = useFetchUser();
+
+  console.log(user, loading);
+
   return (
     <StyledHeader>
       <TitleContainer>
@@ -82,6 +87,26 @@ export const MainNavbar = () => {
             <a>Home</a>
           </Link>
         </Menu.Item>
+        {user && !loading
+          ? [
+              <Menu.Item key="/my-recipes">
+                <Link href="/my-recipes">
+                  <a>My Recipes</a>
+                </Link>
+              </Menu.Item>,
+              <Menu.Item key="/api/logout">
+                <Link href="/api/logout">
+                  <a>Logout</a>
+                </Link>
+              </Menu.Item>
+            ]
+          : [
+              <Menu.Item key="/api/login">
+                <Link href="/api/login">
+                  <a>Login</a>
+                </Link>
+              </Menu.Item>
+            ]}
       </StyledMenu>
     </StyledHeader>
   );

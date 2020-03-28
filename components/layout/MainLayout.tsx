@@ -5,7 +5,7 @@ import { GlobalStyle } from "../../utils/globalStyles";
 import Head from "next/head";
 import { Layout } from "antd";
 import { MainFooter } from "./MainFooter";
-import { MainNavbar } from "../MainNavbar";
+import { MainNavbar } from "./MainNavbar";
 
 const { Content } = Layout;
 
