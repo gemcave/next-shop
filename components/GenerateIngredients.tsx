@@ -46,6 +46,7 @@ export const GenerateIngredients = ({
           <Input
             placeholder={`${name}`}
             name={`ingredients[${index}].${name}`}
+            value={ingredient[name]}
             onChange={handleInputChange}
           />
         );
