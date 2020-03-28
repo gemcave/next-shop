@@ -94,6 +94,11 @@ export const MainNavbar = () => {
                   <a>My Recipes</a>
                 </Link>
               </Menu.Item>,
+              <Menu.Item key="/favorites">
+                <Link href="/favorites">
+                  <a>Favorites</a>
+                </Link>
+              </Menu.Item>,
               <Menu.Item key="/api/logout">
                 <Link href="/api/logout">
                   <a>Logout</a>
