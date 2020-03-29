@@ -1,6 +1,7 @@
 import { GraphQLClient } from "graphql-request";
 
 import getConfig from "next/config";
+import { verifyNotABannedMutation } from "../../utils/verify";
 
 const { publicRuntimeConfig, serverRuntimeConfig } = getConfig();
 const {
@@ -9,7 +10,6 @@ const {
 const {
   graphcms: { BRANCH }
 } = publicRuntimeConfig;
-
 const graphqlEndpoint = `${GRAPHCMSURL}/${GRAPHCMSID}/${BRANCH}`;
 
 export const graphQLClient = new GraphQLClient(graphqlEndpoint, {
@@ -20,8 +20,8 @@ export const graphQLClient = new GraphQLClient(graphqlEndpoint, {
 
 async function proxyGraphql(req, res) {
   try {
+    await verifyNotABannedMutation(req, res);
     const { variables, query } = req.body;
-
     const data = await graphQLClient.rawRequest(query, variables);
     res.json(data);
   } catch (e) {
