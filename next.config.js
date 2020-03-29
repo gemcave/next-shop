@@ -15,14 +15,14 @@ const {
   scope,
   redirectUri,
   postLogoutRedirectUri,
-  cookieSecret
+	cookieSecret,
+	BACKEND_URL,
 } = process.env;
 
 module.exports = withCSS({
 	publicRuntimeConfig: {
+		backend: { BACKEND_URL },
 		graphcms: {
-			GRAPHCMSID,
-			GRAPHCMSURL,
 			APIURL,
 			APIKEY,
 			PROJECTID,
@@ -31,13 +31,17 @@ module.exports = withCSS({
 		}
 	},
 	serverRuntimeConfig: {
+		graphcms: {
+      GRAPHCMSID,
+      GRAPHCMSURL,
+    },
     auth: {
       domain,
       clientId,
       clientSecret,
       scope,
       redirectUri,
-      postLogoutRedirectUri,
+			postLogoutRedirectUri,
     },
     cookieSecret,
   },
