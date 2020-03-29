@@ -16,6 +16,8 @@ import { createUpdateObj } from "../utils/createUpdateObj";
 import { updateRecipeGraphQL } from "../graphql/mutations/updateRecipe";
 import { PictureUploader } from "./PictureUploader";
 import { deleteAssetGraphQL } from "../graphql/mutations/deleteAsset";
+import { DeleteButton } from './DeleteButton';
+
 
 export const UpdateRecipe = ({ id }) => {
   const { loading: isQueryLoading, data, error } = useQuery(recipeGraphQL, {
@@ -98,7 +100,13 @@ export const UpdateRecipe = ({ id }) => {
   }
   console.log(inputs, recipeState);
 
-  if (!data) return <Loading />;
+	if (!data) return <Loading />;
+	
+	const disabled =
+			isQueryLoading ||
+			updateRecipeLoading ||
+			deleteAssetLoading ||
+			recipeState.isPicUploading;
 
   return (
     <Form onFinish={handleUpdate}>
@@ -140,20 +148,16 @@ export const UpdateRecipe = ({ id }) => {
             />
           </Form.Item>
         </Col>
-        <Col span={4}>
+				<Col span={3} offset={1}>
           <Form.Item label="Action">
-					<Button
-              disabled={
-                isQueryLoading ||
-                updateRecipeLoading ||
-                deleteAssetLoading ||
-                recipeState.isPicUploading
-              }
-              type="primary"
-              htmlType="submit"
-            >
+						<Button block disabled={disabled} type="primary" htmlType="submit">
               Update Recipe
             </Button>
+						<DeleteButton
+              id={id}
+              imageId={_.get(inputs, 'images.id')}
+              disabled={disabled}
+            />
           </Form.Item>
         </Col>
       </Row>
