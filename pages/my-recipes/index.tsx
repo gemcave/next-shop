@@ -6,6 +6,7 @@ import { Row, Col, Button } from "antd";
 import { RecipesList, queryEnum } from "../../components/RecipeList";
 import { useFetchUser } from "../../utils/user";
 import Loading from "../../components/notify/Loading";
+import { useRouter } from "next/router";
 
 const StyledRow = styled(Row)`
   ${({ theme }) => `
@@ -21,11 +22,15 @@ const StyledRow = styled(Row)`
 `;
 
 const Index = () => {
+  const router = useRouter();
   const { user, loading: isFetchUser } = useFetchUser();
   const owner = _.get(user, "sub");
   const options = owner ? { variables: { where: { owner } } } : {};
 
   if (isFetchUser) return <Loading />;
+  if (!user) {
+    router.replace("/");
+  }
 
   return (
     <MainLayout title="My Recipes">
