@@ -4,6 +4,7 @@ import styled from "styled-components";
 import * as _ from "lodash";
 import { useFetchUser } from "../utils/user";
 import Loading from "../components/notify/Loading";
+import { useRouter } from "next/router";
 
 const StyledHeader = styled.h1`
   ${({ theme }) => `
@@ -14,11 +15,15 @@ const StyledHeader = styled.h1`
 `;
 
 const Favorites = () => {
+  const router = useRouter();
   const { user, loading: isFetchUser } = useFetchUser();
   const owner = _.get(user, "sub");
   const options = owner ? { variables: { where: { user: owner } } } : {};
 
   if (isFetchUser) return <Loading />;
+  if (!user) {
+    router.replace("/");
+  }
 
   return (
     <MainLayout title="Recipes">

@@ -2,6 +2,7 @@ import getConfig from "next/config";
 import * as _ from "lodash";
 import { Upload, Button } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import { Dispatch, SetStateAction } from "react";
 
 const { publicRuntimeConfig } = getConfig();
 const {
@@ -13,9 +14,16 @@ const {
 } = publicRuntimeConfig.graphcms;
 
 export const PictureUploader = ({
-  handleSubmitImages
+  handleSubmitImages,
+  setRecipeState
 }: {
   handleSubmitImages: (images: any) => void;
+  setRecipeState: Dispatch<
+    SetStateAction<{
+      isQueryLoading: boolean;
+      isPicUploading: boolean;
+    }>
+  >;
 }) => {
   const uploadProps = {
     name: "file",
@@ -23,9 +31,13 @@ export const PictureUploader = ({
       `${APIURL}?key=${APIKEY}&path=/${PROJECTID}-${BRANCH}/${file.name}`,
     data: file => ({ fileUpload: file }),
     onChange: async info => {
+      if (info.file.status === "uploading") {
+        setRecipeState(state => ({ ...state, isPicUploading: true }));
+      }
+
       if (info.file.status === "done") {
         const { size, type, filename } = info.file.response;
-        console.log(size, type, filename);
+
         var img = new Image();
         img.onload = function() {
           const height = _.get(this, "naturalHeight");
@@ -41,16 +53,17 @@ export const PictureUploader = ({
               width
             }
           });
+          setRecipeState(state => ({ ...state, isPicUploading: false }));
         };
         img.src = info.file.response.url;
       } else if (info.file.status === "error") {
         console.log(info);
         console.log(info.file.name);
+        setRecipeState(state => ({ ...state, isPicUploading: false }));
       }
     }
   };
 
-  console.log(APIURL, APIKEY, PROJECTID, BRANCH, CDNBASE);
   return (
     <Upload {...uploadProps}>
       <Button>

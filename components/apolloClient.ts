@@ -6,19 +6,16 @@ import getConfig from "next/config";
 
 const { publicRuntimeConfig } = getConfig();
 const {
-  graphcms: { GRAPHCMSID, GRAPHCMSURL, BRANCH }
+  backend: { BACKEND_URL }
 } = publicRuntimeConfig;
 
 export default function createApolloClient(initialState, ctx) {
-  console.log(
-    `******************======== ${GRAPHCMSURL}/${GRAPHCMSID}/${BRANCH}`
-  );
   // The `ctx` (NextPageContext) will only be present on the server.
   // use it to extract auth headers (ctx.req) or similar.
   return new ApolloClient({
     ssrMode: Boolean(ctx),
     link: new HttpLink({
-      uri: `${GRAPHCMSURL}/${GRAPHCMSID}/${BRANCH}`,
+      uri: BACKEND_URL,
       credentials: "same-origin", // Additional fetch() options like `credentials` or `headers`
       fetch
     }),

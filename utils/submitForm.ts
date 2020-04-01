@@ -4,6 +4,21 @@ import * as _ from "lodash";
 export const submitForm = (initialValues, callback) => {
   const [inputs, setInputs] = useState(initialValues);
 
+  const handleUpdate = async event => {
+    if (event) event.preventDefault();
+    const recipe = await callback();
+    const { content, description, status, title, ingredients, images } = recipe;
+
+    setInputs(() => ({
+      content,
+      description,
+      status,
+      title,
+      ingredients,
+      images
+    }));
+  };
+
   const handleSubmit = event => {
     if (event) event.preventDefault();
     callback();
@@ -62,13 +77,14 @@ export const submitForm = (initialValues, callback) => {
     setInputs(inputs => {
       const newInput = _.cloneDeep(inputs);
       _.set(newInput, "images", images);
-      console.log(images);
       return newInput;
     });
   };
 
   return {
     inputs,
+    setInputs,
+    handleUpdate,
     handleInputChange,
     handleDropdownChange,
     handleSubmit,
